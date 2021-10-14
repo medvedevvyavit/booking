@@ -1,0 +1,30 @@
+server:
+  port: 8085
+
+spring:
+  mvc:
+    format:
+      date: yyyy-MM-dd
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/booking_storage
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  liquibase:
+    change-log: classpath:/db/changelog/changelog.xml
+    user: postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/booking_storage
+    default-schema: public
+
+  jpa:
+    open-in-view: false
+    hibernate.ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc.lob.non_contextual_creation: true
+        default_schema: public
+

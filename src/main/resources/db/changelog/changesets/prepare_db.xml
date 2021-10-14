@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet id="id_task_booking_01" author="vmedvedevv">
+        <createTable tableName="booking_resource">
+            <column name="id" type="varchar(2)">
+                <constraints primaryKey="true" primaryKeyName="pk_booking_resource"/>
+            </column>
+            <column name="name" type="text">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="reservation">
+            <column name="id" type="varchar(2)">
+                <constraints foreignKeyName="fk_booking_resource" references="booking_resource(id)"/>
+            </column>
+            <column name="booking_num" type="varchar(3)"/>
+            <column name="creator_name" type="varchar"/>
+            <column name="create_date" type="timestamp"/>
+            <column name="start_date" type="timestamp"/>
+            <column name="end_date" type="timestamp"/>
+            <column name="person_num" type="int"/>
+            <column name="status" type="varchar(10)"/>
+            <column name="comment" type="text"/>
+        </createTable>
+        <addPrimaryKey tableName="reservation" columnNames="id, booking_num" constraintName="pk_reservation"/>
+    </changeSet>
+
+    <changeSet id="fill-booking-resource-table" author="vmedvedevv" objectQuotingStrategy="QUOTE_ALL_OBJECTS" runOnChange="true">
+        <loadUpdateData file="db/data/booking_resource.csv" separator=";" tableName="booking_resource" primaryKey="id">
+            <column name="id" type="string"/>
+            <column name="name" type="string"/>
+        </loadUpdateData>
+    </changeSet>
+</databaseChangeLog>
