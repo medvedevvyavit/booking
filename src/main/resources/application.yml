@@ -5,6 +5,7 @@ spring:
   mvc:
     format:
       date: yyyy-MM-dd
+      date-time: iso
 
   datasource:
     url: jdbc:postgresql://localhost:5432/booking_storage

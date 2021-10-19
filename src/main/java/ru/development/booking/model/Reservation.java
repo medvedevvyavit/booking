@@ -1,6 +1,7 @@
 package ru.development.booking.model;
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class Reservation implements Serializable {
     @JoinColumn(name = "id", insertable = false, updatable = false)
     private BookingResource resource;
     private String creatorName;
+    @CreationTimestamp
     private LocalDateTime createDate;
     private LocalDateTime startDate;
     private LocalDateTime endDate;

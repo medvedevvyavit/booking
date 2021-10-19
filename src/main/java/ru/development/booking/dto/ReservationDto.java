@@ -10,9 +10,7 @@ import java.time.LocalDateTime;
 public class ReservationDto {
 
     private ReservationId id;
-    private String bookingNumber;
     private String creatorName;
-    private LocalDateTime createDate;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private Integer personNumber;

@@ -57,4 +57,9 @@ public class BookingServiceImpl implements BookingService {
                 .map(mapper::toReservationDto)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public ReservationId saveReservation(ReservationDto reservation) {
+        return reservationRepository.save(mapper.toReservation(reservation)).getId();
+    }
 }

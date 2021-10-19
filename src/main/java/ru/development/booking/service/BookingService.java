@@ -13,4 +13,5 @@ public interface BookingService {
     BookingResourceDto getResourceById(String id);
     List<BookingResourceDto> getAllResources();
     List<ReservationDto> searchReservations(LocalDateTime startDate, LocalDateTime endDate);
+    ReservationId saveReservation(ReservationDto reservation);
 }

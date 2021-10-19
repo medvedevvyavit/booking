@@ -37,8 +37,13 @@ public class BookingController {
         return new ResponseEntity<>(service.getAllResources(), HttpStatus.OK);
     }
 
-    @GetMapping("/reservations/search")
+    @GetMapping("/reservations")
     public ResponseEntity<List<ReservationDto>> searchReservations(@RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate){
         return new ResponseEntity<>(service.searchReservations(startDate, endDate), HttpStatus.OK);
+    }
+
+    @PostMapping("/reservations")
+    public ResponseEntity<ReservationId> saveReservation(@RequestBody ReservationDto reservation){
+        return new ResponseEntity<>(service.saveReservation(reservation), HttpStatus.OK);
     }
 }

@@ -10,5 +10,6 @@ import ru.development.booking.model.Reservation;
 public interface BookingMapper {
 
     ReservationDto toReservationDto(Reservation source);
+    Reservation toReservation(ReservationDto source);
     BookingResourceDto toBookingResourceDto(BookingResource source);
 }
