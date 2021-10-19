@@ -10,7 +10,9 @@ import ru.development.booking.mapper.BookingMapper;
 import ru.development.booking.model.ReservationId;
 import ru.development.booking.repository.BookingResourceRepository;
 import ru.development.booking.repository.ReservationRepository;
+import ru.development.booking.repository.ReservationSpecification;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +47,14 @@ public class BookingServiceImpl implements BookingService {
         return bookingResourceRepository.findAll()
                 .stream()
                 .map(mapper::toBookingResourceDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReservationDto> searchReservations(LocalDateTime startDate, LocalDateTime endDate) {
+        return reservationRepository.findAll(new ReservationSpecification(startDate, endDate))
+                .stream()
+                .map(mapper::toReservationDto)
                 .collect(Collectors.toList());
     }
 }

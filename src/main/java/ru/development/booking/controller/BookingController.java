@@ -6,9 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.development.booking.dto.BookingResourceDto;
 import ru.development.booking.dto.ReservationDto;
+import ru.development.booking.dto.ReservationFilterDto;
+import ru.development.booking.model.Reservation;
 import ru.development.booking.model.ReservationId;
 import ru.development.booking.service.BookingService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -32,5 +35,10 @@ public class BookingController {
     @GetMapping("/allResources")
     public ResponseEntity<List<BookingResourceDto>> getAllResources(){
         return new ResponseEntity<>(service.getAllResources(), HttpStatus.OK);
+    }
+
+    @GetMapping("/reservations/search")
+    public ResponseEntity<List<ReservationDto>> searchReservations(@RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate){
+        return new ResponseEntity<>(service.searchReservations(startDate, endDate), HttpStatus.OK);
     }
 }
