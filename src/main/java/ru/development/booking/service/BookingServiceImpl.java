@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.development.booking.dto.BookingResourceDto;
 import ru.development.booking.dto.ReservationDto;
+import ru.development.booking.dto.ReservationFilterDto;
 import ru.development.booking.mapper.BookingMapper;
 import ru.development.booking.model.ReservationId;
 import ru.development.booking.repository.BookingResourceRepository;
@@ -51,8 +52,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<ReservationDto> searchReservations(LocalDateTime startDate, LocalDateTime endDate) {
-        return reservationRepository.findAll(new ReservationSpecification(startDate, endDate))
+    public List<ReservationDto> searchReservations(ReservationFilterDto filter) {
+        return reservationRepository.findAll(new ReservationSpecification(filter))
                 .stream()
                 .map(mapper::toReservationDto)
                 .collect(Collectors.toList());
