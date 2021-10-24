@@ -15,4 +15,5 @@ public interface BookingService {
     List<BookingResourceDto> getAllResources();
     List<ReservationDto> searchReservations(ReservationFilterDto filter);
     ReservationId saveReservation(ReservationDto reservation);
+    String saveResource(BookingResourceDto resource);
 }

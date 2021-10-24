@@ -24,11 +24,9 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingResourceRepository bookingResourceRepository;
 
-    @Autowired
-    private ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
 
-    @Autowired
-    private BookingMapper mapper;
+    private final BookingMapper mapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -62,5 +60,10 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public ReservationId saveReservation(ReservationDto reservation) {
         return reservationRepository.save(mapper.toReservation(reservation)).getId();
+    }
+
+    @Override
+    public String saveResource(BookingResourceDto resource) {
+        return bookingResourceRepository.save(mapper.toBookingResource(resource)).getId();
     }
 }

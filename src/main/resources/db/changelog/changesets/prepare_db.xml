@@ -30,10 +30,10 @@
         <addPrimaryKey tableName="reservation" columnNames="id, booking_num" constraintName="pk_reservation"/>
     </changeSet>
 
-    <changeSet id="fill-booking-resource-table" author="vmedvedevv" objectQuotingStrategy="QUOTE_ALL_OBJECTS" runOnChange="true">
-        <loadUpdateData file="db/data/booking_resource.csv" separator=";" tableName="booking_resource" primaryKey="id">
-            <column name="id" type="string"/>
-            <column name="name" type="string"/>
-        </loadUpdateData>
-    </changeSet>
+<!--    <changeSet id="fill-booking-resource-table" author="vmedvedevv" objectQuotingStrategy="QUOTE_ALL_OBJECTS" runOnChange="true">-->
+<!--        <loadUpdateData file="db/data/booking_resource.csv" separator=";" tableName="booking_resource" primaryKey="id">-->
+<!--            <column name="id" type="string"/>-->
+<!--            <column name="name" type="string"/>-->
+<!--        </loadUpdateData>-->
+<!--    </changeSet>-->
 </databaseChangeLog>

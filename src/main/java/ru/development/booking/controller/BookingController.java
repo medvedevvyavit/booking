@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.development.booking.dto.BookingResourceDto;
 import ru.development.booking.dto.ReservationDto;
 import ru.development.booking.dto.ReservationFilterDto;
-import ru.development.booking.model.Reservation;
 import ru.development.booking.model.ReservationId;
 import ru.development.booking.service.BookingService;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -45,5 +43,10 @@ public class BookingController {
     @PostMapping("/reservations")
     public ResponseEntity<ReservationId> saveReservation(@RequestBody ReservationDto reservation){
         return new ResponseEntity<>(service.saveReservation(reservation), HttpStatus.OK);
+    }
+
+    @PostMapping("/resource")
+    public ResponseEntity<String> saveResource(@RequestBody BookingResourceDto resource){
+        return new ResponseEntity<>(service.saveResource(resource), HttpStatus.OK);
     }
 }
