@@ -1,21 +1,24 @@
 package ru.development.booking.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.development.booking.dto.BookingResourceDto;
 import ru.development.booking.dto.ReservationDto;
 import ru.development.booking.dto.ReservationFilterDto;
+import ru.development.booking.exception.EntityAlreadyExistsException;
 import ru.development.booking.mapper.BookingMapper;
+import ru.development.booking.model.Reservation;
 import ru.development.booking.model.ReservationId;
 import ru.development.booking.repository.BookingResourceRepository;
 import ru.development.booking.repository.ReservationRepository;
 import ru.development.booking.repository.ReservationSpecification;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.lang.String.format;
+import static ru.development.booking.exception.ExceptionConstants.ENTITY_ALREADY_EXISTS_MSG;
 
 @Service
 @Transactional
@@ -23,9 +26,7 @@ import java.util.stream.Collectors;
 public class BookingServiceImpl implements BookingService {
 
     private final BookingResourceRepository bookingResourceRepository;
-
     private final ReservationRepository reservationRepository;
-
     private final BookingMapper mapper;
 
     @Override
@@ -58,8 +59,14 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public ReservationId saveReservation(ReservationDto reservation) {
-        return reservationRepository.save(mapper.toReservation(reservation)).getId();
+    public ReservationId saveReservation(ReservationDto reservationDto) {
+        Reservation reservation = mapper.toReservation(reservationDto);
+
+        if (reservationRepository.findIdByCrossingPeriod(reservation.getStartDate(), reservation.getEndDate()) != null) {
+            return reservationRepository.save(mapper.toReservation(reservationDto)).getId();
+        }
+
+        throw new EntityAlreadyExistsException(format(ENTITY_ALREADY_EXISTS_MSG, "Reservation"));
     }
 
     @Override
