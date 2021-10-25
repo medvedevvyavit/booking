@@ -8,7 +8,6 @@ import ru.development.booking.dto.ReservationDto;
 import ru.development.booking.dto.ReservationFilterDto;
 import ru.development.booking.exception.EntityAlreadyExistsException;
 import ru.development.booking.mapper.BookingMapper;
-import ru.development.booking.model.Reservation;
 import ru.development.booking.model.ReservationId;
 import ru.development.booking.repository.BookingResourceRepository;
 import ru.development.booking.repository.ReservationRepository;
@@ -18,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
+import static ru.development.booking.exception.ExceptionConstants.ENTITY_ALREADY_EXISTS_CROSSING_DATE_MSG;
 import static ru.development.booking.exception.ExceptionConstants.ENTITY_ALREADY_EXISTS_MSG;
 
 @Service
@@ -60,17 +60,22 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public ReservationId saveReservation(ReservationDto reservationDto) {
-        Reservation reservation = mapper.toReservation(reservationDto);
-
-        if (reservationRepository.findIdByCrossingPeriod(reservation.getStartDate(), reservation.getEndDate()) != null) {
-            return reservationRepository.save(mapper.toReservation(reservationDto)).getId();
+        ReservationId id = reservationDto.getId();
+        if (reservationRepository.existsById(id)){
+            throw new EntityAlreadyExistsException(format(ENTITY_ALREADY_EXISTS_MSG, "Reservation"));
         }
-
-        throw new EntityAlreadyExistsException(format(ENTITY_ALREADY_EXISTS_MSG, "Reservation"));
+        if (reservationRepository.findIdByCrossingPeriod(id.getId(), reservationDto.getStartDate(), reservationDto.getEndDate()) == null) {
+            throw new EntityAlreadyExistsException(format(ENTITY_ALREADY_EXISTS_CROSSING_DATE_MSG, "Reservation"));
+        }
+        return reservationRepository.save(mapper.toReservation(reservationDto)).getId();
     }
 
     @Override
-    public String saveResource(BookingResourceDto resource) {
-        return bookingResourceRepository.save(mapper.toBookingResource(resource)).getId();
+    public String saveResource(BookingResourceDto resourceDto) {
+        String id = resourceDto.getId();
+        if (bookingResourceRepository.existsById(id)){
+            throw new EntityAlreadyExistsException(format(ENTITY_ALREADY_EXISTS_MSG, "BookingResource"));
+        }
+        return bookingResourceRepository.save(mapper.toBookingResource(resourceDto)).getId();
     }
 }

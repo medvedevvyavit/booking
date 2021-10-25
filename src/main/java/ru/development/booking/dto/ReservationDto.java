@@ -15,4 +15,5 @@ public class ReservationDto {
     private LocalDateTime endDate;
     private Integer personNumber;
     private ReservationStatus status;
+    private String comment;
 }

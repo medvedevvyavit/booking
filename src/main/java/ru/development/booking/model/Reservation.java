@@ -29,4 +29,6 @@ public class Reservation implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
+
+    private String comment;
 }

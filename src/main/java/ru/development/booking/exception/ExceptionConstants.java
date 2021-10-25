@@ -6,4 +6,5 @@ import lombok.experimental.UtilityClass;
 public class ExceptionConstants {
 
     public static final String ENTITY_ALREADY_EXISTS_MSG = "Entity: %s already exists";
+    public static final String ENTITY_ALREADY_EXISTS_CROSSING_DATE_MSG = "Entity: %s already exists on crossing date";
 }
