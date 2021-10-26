@@ -1,24 +1,27 @@
 package ru.development.booking.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.development.booking.dto.BookingResourceDto;
 import ru.development.booking.dto.ReservationDto;
 import ru.development.booking.dto.ReservationFilterDto;
 import ru.development.booking.exception.EntityAlreadyExistsException;
+import ru.development.booking.exception.ReservationCreatingException;
 import ru.development.booking.mapper.BookingMapper;
 import ru.development.booking.model.ReservationId;
 import ru.development.booking.repository.BookingResourceRepository;
 import ru.development.booking.repository.ReservationRepository;
 import ru.development.booking.repository.ReservationSpecification;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
-import static ru.development.booking.exception.ExceptionConstants.ENTITY_ALREADY_EXISTS_CROSSING_DATE_MSG;
-import static ru.development.booking.exception.ExceptionConstants.ENTITY_ALREADY_EXISTS_MSG;
+import static ru.development.booking.exception.ExceptionConstants.*;
 
 @Service
 @Transactional
@@ -66,6 +69,9 @@ public class BookingServiceImpl implements BookingService {
         }
         if (reservationRepository.findIdByCrossingPeriod(id.getId(), reservationDto.getStartDate(), reservationDto.getEndDate()) == null) {
             throw new EntityAlreadyExistsException(format(ENTITY_ALREADY_EXISTS_CROSSING_DATE_MSG, "Reservation"));
+        }
+        if(reservationDto.getStartDate().isBefore(LocalDateTime.now()) || reservationDto.getEndDate().isBefore(LocalDateTime.now())){
+            throw new ReservationCreatingException(CREATE_RESERVATION_IN_THE_PAST);
         }
         return reservationRepository.save(mapper.toReservation(reservationDto)).getId();
     }
