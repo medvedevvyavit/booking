@@ -5,7 +5,6 @@ import ru.development.booking.dto.ReservationDto;
 import ru.development.booking.dto.ReservationFilterDto;
 import ru.development.booking.model.ReservationId;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface BookingService {
@@ -15,5 +14,6 @@ public interface BookingService {
     List<BookingResourceDto> getAllResources();
     List<ReservationDto> searchReservations(ReservationFilterDto filter);
     ReservationId saveReservation(ReservationDto reservation);
+    ReservationDto updateReservation(ReservationDto reservation);
     String saveResource(BookingResourceDto resource);
 }

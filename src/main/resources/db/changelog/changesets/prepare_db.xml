@@ -18,7 +18,7 @@
             </column>
             <column name="booking_num" type="varchar(3)"/>
             <column name="creator_name" type="varchar"/>
-            <column name="create_date" type="timestamp">
+            <column name="create_date" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
             <column name="start_date" type="timestamp"/>
