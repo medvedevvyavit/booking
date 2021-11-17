@@ -1,24 +1,30 @@
 package ru.development.booking.job;
 
-
 import org.springframework.batch.item.ItemReader;
+import org.springframework.stereotype.Component;
+import ru.development.booking.dto.ReservationDto;
+import ru.development.booking.dto.ReservationFilterDto;
+import ru.development.booking.service.BookingService;
 
-public class Reader implements ItemReader<String> {
+import java.time.LocalDateTime;
+import java.util.Iterator;
 
-    private String[] messages = {
-            "javainuse.com",
-            "Welcome to Spring Batch Example",
-            "We use H2 Database for this example"
-    };
+public class Reader implements ItemReader<ReservationDto> {
 
-    private int count = 0;
+    private final Iterator<ReservationDto> reservationIterator;
+
+    public Reader(BookingService bookingService) {
+        reservationIterator = bookingService
+                .searchReservations(new ReservationFilterDto(
+                        LocalDateTime.of(1900, 1, 1, 0, 0),
+                        LocalDateTime.now().minusDays(1)
+                )).iterator();
+    }
 
     @Override
-    public String read() {
-        if (count < messages.length) {
-            return messages[count++];
-        } else {
-            count = 0;
+    public ReservationDto read() {
+        if (reservationIterator.hasNext()){
+            return reservationIterator.next();
         }
         return null;
     }

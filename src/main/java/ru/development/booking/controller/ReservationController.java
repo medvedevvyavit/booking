@@ -43,20 +43,4 @@ public class ReservationController {
     public ResponseEntity<ReservationDto> updateReservation(@RequestBody ReservationDto reservation) {
         return new ResponseEntity<>(service.updateReservation(reservation), HttpStatus.OK);
     }
-
-    @Autowired
-    private JobLauncher jobLauncher;
-
-    @Autowired
-    private Job processJob;
-
-    @RequestMapping("/invokejob")
-    public String handle() throws Exception {
-
-        JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis())
-                .toJobParameters();
-        jobLauncher.run(processJob, jobParameters);
-
-        return "Batch job has been invoked";
-    }
 }

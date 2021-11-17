@@ -1,11 +1,13 @@
 package ru.development.booking.job;
 
 import org.springframework.batch.item.ItemProcessor;
+import ru.development.booking.dto.ReservationDto;
+import ru.development.booking.model.Reservation;
 
-public class Processor implements ItemProcessor<String, String> {
+public class Processor implements ItemProcessor<ReservationDto, ReservationDto> {
 
     @Override
-    public String process(String s) {
-        return s.toUpperCase();
+    public ReservationDto process(ReservationDto reservation) {
+        return reservation;
     }
 }

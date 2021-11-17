@@ -3,7 +3,7 @@ server:
 
 booking:
   job:
-    cron: 0 * * * * *
+    cron: 0/10 * * * * *
 
 spring:
   mvc:
