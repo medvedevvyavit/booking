@@ -22,7 +22,9 @@ public class JobTrigger {
     @SneakyThrows
     @Scheduled(cron = "${booking.job.cron}")
     public void invokeJob() {
-        JobParameters jobParameters = new JobParametersBuilder().addLong("time", System.currentTimeMillis()).toJobParameters();
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addLong("time", System.currentTimeMillis())
+                .toJobParameters();
         jobLauncher.run(processJob, jobParameters);
         log.info("Batch job has been invoked");
     }
