@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @Entity
@@ -13,7 +14,7 @@ public class BookingResource implements Serializable {
     @Id
     private String id;
 
-    @OneToOne(mappedBy = "resource", cascade = CascadeType.PERSIST)
-    private Reservation reservation;
+    @OneToMany(mappedBy = "resource", fetch = FetchType.LAZY)
+    private List<Reservation> reservations;
     private String name;
 }

@@ -22,11 +22,11 @@ public class ReservationSpecification implements Specification<Reservation> {
         List<Predicate> predicates = new ArrayList<>();
 
         if (filter.getStartDate() != null) {
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("startDate"), filter.getStartDate()));
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startDate"), filter.getStartDate()));
         }
 
         if (filter.getEndDate() != null) {
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("endDate"), filter.getEndDate()));
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), filter.getEndDate()));
         }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));

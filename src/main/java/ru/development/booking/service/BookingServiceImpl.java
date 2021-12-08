@@ -2,7 +2,6 @@ package ru.development.booking.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.development.booking.dto.BookingResourceDto;
@@ -51,6 +50,14 @@ public class BookingServiceImpl implements BookingService {
         return bookingResourceRepository.findAll()
                 .stream()
                 .map(mapper::toBookingResourceDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReservationDto> getAllReservations() {
+        return reservationRepository.findAll()
+                .stream()
+                .map(mapper::toReservationDto)
                 .collect(Collectors.toList());
     }
 

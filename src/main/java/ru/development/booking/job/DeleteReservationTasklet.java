@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import ru.development.booking.dto.ReservationFilterDto;
 import ru.development.booking.repository.ReservationRepository;
 import ru.development.booking.service.BookingService;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Component
@@ -22,9 +24,8 @@ public class DeleteReservationTasklet implements Tasklet {
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) {
         bookingService.searchReservations(new ReservationFilterDto(
                 LocalDateTime.of(1900, 1, 1, 0, 0),
-                LocalDateTime.now().minusDays(1)))
-                .stream()
-                .peek(reservationDto -> reservationRepository.deleteById(reservationDto.getId()));
+                LocalDate.now().atStartOfDay().minusDays(1)
+        )).forEach(reservation -> reservationRepository.deleteById(reservation.getId()));
 
         return RepeatStatus.FINISHED;
     }
