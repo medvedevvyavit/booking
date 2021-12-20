@@ -8,7 +8,6 @@ import org.springframework.batch.core.configuration.annotation.StepBuilderFactor
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.development.booking.job.DeleteReservationTasklet;
-import ru.development.booking.service.BookingService;
 
 @Configuration
 @RequiredArgsConstructor
@@ -19,14 +18,16 @@ public class BatchConfiguration {
     private final DeleteReservationTasklet deleteReservationTasklet;
 
     @Bean
-    public Job processJobinator(){
-        return jobBuilderFactory.get("processJobinator")
-                .start(steporator())
+    public Job processJob(){
+        return jobBuilderFactory.get("processJob")
+                .start(step())
                 .build();
     }
 
     @Bean
-    public Step steporator() {
-        return stepBuilderFactory.get("steporator").tasklet(deleteReservationTasklet).build();
+    public Step step() {
+        return stepBuilderFactory.get("step")
+                .tasklet(deleteReservationTasklet)
+                .build();
     }
 }

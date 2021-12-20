@@ -45,4 +45,9 @@ public class ReservationController {
     public ResponseEntity<ReservationDto> updateReservation(@RequestBody ReservationDto reservation) {
         return new ResponseEntity<>(service.updateReservation(reservation), HttpStatus.OK);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ReservationDto>> getAllReservations(){
+        return new ResponseEntity<>(service.getAllReservations(), HttpStatus.OK);
+    }
 }

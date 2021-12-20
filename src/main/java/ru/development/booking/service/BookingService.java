@@ -12,6 +12,7 @@ public interface BookingService {
     ReservationDto getReservationById(ReservationId id);
     BookingResourceDto getResourceById(String id);
     List<BookingResourceDto> getAllResources();
+    List<ReservationDto> getAllReservations();
     List<ReservationDto> searchReservations(ReservationFilterDto filter);
     ReservationId saveReservation(ReservationDto reservation);
     ReservationDto updateReservation(ReservationDto reservation);

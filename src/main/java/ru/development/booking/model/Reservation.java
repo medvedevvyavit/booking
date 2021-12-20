@@ -15,10 +15,11 @@ public class Reservation implements Serializable {
     @EmbeddedId
     private ReservationId id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id", insertable = false, updatable = false)
     private BookingResource resource;
     private String creatorName;
+
     @CreationTimestamp
     private LocalDateTime createDate;
     private LocalDateTime startDate;
