@@ -65,7 +65,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public ReservationId saveReservation(ReservationDto reservationDto) {
         if (reservationRepository.existsById(reservationDto.getId())){
-            throw new EntityAlreadyExistsException(format(ENTITY_ALREADY_EXISTS_MSG, "Reservation"));
+            throw new EntityAlreadyExistsException(format(ENTITY_ALREADY_EXISTS_MSG, "Reservation", reservationDto.getId()));
         }
         validateByPeriod(reservationDto);
 
@@ -96,7 +96,7 @@ public class BookingServiceImpl implements BookingService {
     public String saveResource(BookingResourceDto resourceDto) {
         String id = resourceDto.getId();
         if (bookingResourceRepository.existsById(id)){
-            throw new EntityAlreadyExistsException(format(ENTITY_ALREADY_EXISTS_MSG, "BookingResource"));
+            throw new EntityAlreadyExistsException(format(ENTITY_ALREADY_EXISTS_MSG, "BookingResource", id));
         }
         return bookingResourceRepository.save(mapper.toBookingResource(resourceDto)).getId();
     }

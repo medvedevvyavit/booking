@@ -8,6 +8,7 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.development.booking.dto.ReservationDto;
 import ru.development.booking.dto.ReservationFilterDto;
@@ -29,17 +30,18 @@ public class ReservationController {
         return new ResponseEntity<>(reservationDto, HttpStatus.OK);
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<ReservationDto>> searchReservations(ReservationFilterDto filter){
         return new ResponseEntity<>(service.searchReservations(filter), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping
+    @PreAuthorize("hasAuthority('CREATE_RESERVATION')")
     public ResponseEntity<ReservationId> saveReservation(@RequestBody ReservationDto reservation){
         return new ResponseEntity<>(service.saveReservation(reservation), HttpStatus.OK);
     }
 
-    @PutMapping()
+    @PutMapping
     public ResponseEntity<ReservationDto> updateReservation(@RequestBody ReservationDto reservation) {
         return new ResponseEntity<>(service.updateReservation(reservation), HttpStatus.OK);
     }

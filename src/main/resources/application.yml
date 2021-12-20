@@ -1,6 +1,12 @@
 server:
   port: 8085
 
+jwt:
+  token:
+    secret: aadadadf
+    expiredAccess: 900000
+    expiredRefresh: 3600000
+
 booking:
   job:
     cron: 0/10 * * * * *

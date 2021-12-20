@@ -3,6 +3,7 @@ package ru.development.booking.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.development.booking.dto.BookingResourceDto;
 import ru.development.booking.service.BookingService;
@@ -26,7 +27,8 @@ public class ResourceController {
         return new ResponseEntity<>(service.getAllResources(), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping
+    @PreAuthorize("hasAuthority('CREATE_RESERVATION')")
     public ResponseEntity<String> saveResource(@RequestBody BookingResourceDto resource){
         return new ResponseEntity<>(service.saveResource(resource), HttpStatus.OK);
     }
